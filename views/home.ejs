@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Home</title>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+    <% if (blogs.length === 0) { %>
+    <div class="text-center mt-5">
+        <h3>No Blogs Yet</h3>
+        <p>Create your first blog post.</p>
+    </div>
+<% } else { %>
+ 
+    <div class="container mt-5">
+
+    <h2 class="text-center mb-5">
+        Latest Blogs
+    </h2>
+
+    <% blogs.forEach(blog => { %>
+
+        <div class="row justify-content-center mb-4">
+
+            <div class="col-lg-8">
+
+                <div class="card shadow border-0">
+
+                    <div class="row g-0">
+
+                        <div class="col-md-4">
+                            <img
+                                src="<%= blog.CoverImageURL %>"
+                                class="img-fluid rounded-start h-100"
+                                style="object-fit: cover;"
+                                alt="<%= blog.Title %>"
+                            >
+                        </div>
+
+                        <div class="col-md-8">
+
+                            <div class="card-body">
+
+                                <h3 class="card-title">
+                                    <%= blog.Title %>
+                                </h3>
+
+                                <p class="card-text">
+                                    <%= blog.Body.substring(0, 200) %>...
+                                </p>
+
+                                <div class="d-flex justify-content-between align-items-center">
+
+                                    <a
+                                        href="/blog/<%= blog._id %>"
+                                        class="btn btn-dark"
+                                    >
+                                        Read More
+                                    </a>
+
+                                    <small class="text-muted">
+                                        <%= blog.createdAt.toDateString() %>
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    <% }) %>
+
+</div>
+<% }%>
+    <%- include('./partials/script') %>
+  </body>
+</html>

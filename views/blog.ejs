@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title><%= blog.Title %></title>
+</head>
+<body class="bg-light">
+
+    <%- include('./partials/nav') %>
+
+    <div class="container mt-5">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-10">
+
+                <div class="card shadow border-0">
+
+                    <img
+                        src="<%= blog.CoverImageURL %>"
+                        class="card-img-top"
+                        style="max-height: 500px; object-fit: cover;"
+                        alt="<%= blog.Title %>"
+                    >
+
+                    <div class="card-body p-5">
+
+                        <h1 class="mb-3">
+                            <%= blog.Title %>
+                        </h1>
+
+                        <div class="mb-4 text-muted">
+
+                            <strong>
+                                <%= blog.createdBy.Name || "Unknown Author" %>
+                            </strong>
+
+                            ·
+
+                            <%= blog.createdAt.toDateString() %>
+
+                        </div>
+
+                        <hr>
+
+                        <div
+                            class="mt-4"
+                            style="
+                                font-size: 1.15rem;
+                                line-height: 1.9;
+                                white-space: pre-wrap;
+                            "
+                        >
+                            <%= blog.Body %>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <hr class="my-5">
+
+<hr class="my-5">
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <h3 class="mb-4">Comments</h3>
+
+        <% if (comments && comments.length > 0) { %>
+
+            <% comments.forEach(comment => { %>
+
+                <div class="card shadow-sm border-0 mb-3">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+
+                            <h6 class="fw-bold mb-0">
+                                <%= comment.createdBy?.Name || "Anonymous" %>
+                            </h6>
+
+                            <small class="text-muted">
+                                <%= comment.createdAt.toDateString() %>
+                            </small>
+
+                        </div>
+
+                        <p class="mb-0">
+                            <%= comment.Content %>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        <% } else { %>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center text-muted">
+                    No comments yet. Be the first to comment!
+                </div>
+            </div>
+
+        <% } %>
+
+    </div>
+</div>
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-8">
+
+        <div class="card shadow border-0">
+            <div class="card-body">
+
+                <h3 class="mb-3">Leave a Comment</h3>
+
+                <form action="/blog/comment/<%= blog._id %>" method="POST">
+
+                    <div class="mb-3">
+                        <textarea
+                            class="form-control"
+                            rows="4"
+                            name="Content"
+                            placeholder="Share your thoughts..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-dark px-4"
+                    >
+                        Post Comment
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <%- include('./partials/script') %>
+
+</body>
+</html>
